@@ -6,11 +6,14 @@ import java.awt.event.KeyListener;
 //  Реализует обработку нажатия клавиш в приложении.
 public class KeyHandler implements KeyListener{
 
-	// Объявляются булевые переменные для отслеживания состояния клавиш передвижения.
+	// Объявляются булевы переменные для отслеживания состояния клавиш передвижения.
 	public boolean upPressed, downPressed, leftPressed, rightPressed;
 
 	// Отладка
 	boolean checkDrawTime = false;
+
+	// Играть музыку
+	public boolean playMusic = true;
 
 
 	@Override
@@ -42,6 +45,12 @@ public class KeyHandler implements KeyListener{
 		if(code == KeyEvent.VK_T) { // Если нажата клавиша T
             checkDrawTime = !checkDrawTime;
 		}
+
+		// При нажатии на
+		if(code == KeyEvent.VK_P) { // Если нажата клавиша P
+			playMusic = !playMusic;
+		}
+
 		
 	}
 

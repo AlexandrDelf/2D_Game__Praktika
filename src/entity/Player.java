@@ -40,7 +40,7 @@ public class Player extends Entity{
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 16;
-		solidArea.height = 16;
+		solidArea.height = 20;
 
 		
 		setDefaultValues(); // Вызов метода для значений по умолчанию
@@ -55,7 +55,7 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 6;
 
 		//Скорость игрока
-		speed = 4;
+		speed = 8;
 		direction = "down";
 	}
 
@@ -196,17 +196,17 @@ public class Player extends Entity{
 
                 case "Sneakers" -> {
                     gp.playSE(2);
-                    speed += 6;
+                    speed += 10;
                     gp.obj[i] = null;
 					gp.ui.showMessage("Кто-то оставил\nещё годные кроссовки!");
                 }
 
 				case "Box" -> {
 					gp.ui.gameFinished = true;
-					gp.stopMusic();
+//					gp.stopMusic();
+					keyH.playMusic = false;
 					gp.playSE(4);
-					break;
-				}
+                }
             }
 		}
 

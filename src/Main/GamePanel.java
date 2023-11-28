@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public SuperObject[] obj = new SuperObject[10];
 
 
-	// Конструктор игровой панелиGamePanel
+	// Конструктор игровой панели GamePanel
 	public GamePanel() {
 
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // Установка размеров экрана, используя высоту screenHeight и ширину screenWidth
@@ -113,6 +113,12 @@ public class GamePanel extends JPanel implements Runnable{
 				// Нарисовать экран с обновлением информации
 				repaint();
 
+				if(keyH.playMusic) {
+					music.play();
+				} else {
+					music.stop();
+				}
+
 				// Переводит оставшееся время (remainingTime) в миллисекунды и проверяет, является ли оно меньше нуля.
 				// Если это так, то оставшееся время устанавливается равным нулю.
 				// Это связано с тем, что метод sleep() не может принять отрицательное значение времени.
@@ -124,7 +130,7 @@ public class GamePanel extends JPanel implements Runnable{
 						remainingTime = 0;
 					}
 
-					Thread.sleep((long) remainingTime); // Останавливает игру пока ничего не происходит.  Поток “засыпает” на определенное время, чтобы обеспечить плавную работу игры и избежать перегрузки процессора.
+					Thread.sleep((long) remainingTime); // Останавливает игру пока ничего не происходит.  Поток “засыпает” на определенное время, чтобы обеспечить плавную работу игры.
 
 
 					nextDrawTime += drawInterval; // Когда время сна заканчивается и возобновляется поток, добавляем интервал рисования
@@ -149,7 +155,7 @@ public class GamePanel extends JPanel implements Runnable{
 		// Метод отрисовки, один из стандартных методов рисования на Jpanel
 		public void paintComponent(Graphics g) {
 
-			super.paintComponent(g);
+			super.paintComponent(g); // Формат при использовании метода на Jpanel
 			Graphics2D g2 = (Graphics2D)g; // Преобразование объекта графики g в Graphics2D для возможности использования расширенных методов отрисовки.
 
 			// Отладка
@@ -200,13 +206,11 @@ public class GamePanel extends JPanel implements Runnable{
 			music.setFile(i); // Выбор необходимого файла
 			music.play(); // Запуск выбранного файла
 			music.loop(); // Зацикливание файла
-
 		}
 
 		public void stopMusic() {
 
 			music.stop(); // Остановка музыки
-
 		}
 
 		// Метод playSE() проигрывает звуковой эффект, выбранный с помощью параметра i.

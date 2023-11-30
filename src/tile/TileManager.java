@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class TileManager {
 
-    GamePanel gp;
-    public Tile[] tile;
+    GamePanel gp; // Использование методов рисования из игровой панели
+    public Tile[] tile; //
     public int[][] mapTileNum; //Создание переменной массива;
 
     // Конструктор
@@ -30,6 +30,8 @@ public class TileManager {
 
         // Вызов метода получения плитки из конструктора
         getTileImage();
+
+        // Вызов метода загрузки карты
         loadMap("/maps/world02.txt");
     }
 
@@ -121,12 +123,13 @@ public class TileManager {
     }
 
    // Загрузка карты
+   // Текстовое описание карты разбирается и загружается в программный массив. В дальнейшем по этому массиву отрисовываются тайлы карты
    public void loadMap(String filePath) {
 
         try {
-            InputStream is = getClass().getResourceAsStream(filePath);
+            InputStream is = getClass().getResourceAsStream(filePath); // Считывает файл карты в поток InputStream
             assert is != null;
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(is)); // Считываем построчно данные при помощи BufferedReader
 
             int col = 0;
             int row = 0;
@@ -136,13 +139,14 @@ public class TileManager {
                 String line = br.readLine(); // Чтение одной строки map01.txt, помещает её в строковую line
 
                 while(col < gp.maxWorldCol) {
-                String[] numbers = line.split(" ");
+                String[] numbers = line.split(" "); // Разделяет строку на отдельные tileId при помощи метода split()
 
-                int num = Integer.parseInt(numbers[col]);
+                int num = Integer.parseInt(numbers[col]); // Парсим tileId в integer число при помощи метода parseInt()
 
-                mapTileNum[col][row] = num;
+                mapTileNum[col][row] = num; // Записывает это число как номер тайла в массив карты mapTileNum по координатам col и row
                 col++;
             }
+            // Переходим к следующему tileId в строке и следующей строке циклами
             if(col == gp.maxWorldCol) {
                 col = 0;
                 row++;
@@ -157,30 +161,34 @@ public class TileManager {
         }
    }
 
-
+    //  Метод рисования, отвечает за отрисовку игрового поля в 2D игре
+    //  Отрисовка видимой игроку части карты на экране в зависимости от его координат
     public void draw(Graphics2D g2) {
 
         // Создание переменных и цикла while для автоматизации процесса рисования плитки
-
         int worldCol = 0;
         int worldRow = 0;
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 
-            int tileNum = mapTileNum[worldCol][worldRow];
+            int tileNum = mapTileNum[worldCol][worldRow]; // Получает номер тайла в массиве карты mapTileNum по координатам.
 
+            // Вычисляем мировые координаты тайла и экранные относительно игрока.
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            // Условие при котором плитка отрисовывается вокруг player
+            // Проверяем, попадает ли тайл в видимую игроком область экрана
+            // Если да - отрисовываем его изображение в соответствующих экранных координатах
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, null);
             }
+
+            // Инкрементируем счётчики тайлов и переходим к следующему
 
             worldCol ++;
 

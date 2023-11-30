@@ -20,20 +20,24 @@ public class Player extends Entity{
 	// Создание переменных позиции отрисовки игрока на экране
 	public final int screenX;
 	public final int screenY;
+
 	public int hasKey = 0; // Число указывающее сколько ключей есть у игрока
 
 
 	// Метод конструктор для Player с аргументами (GamePanel gp, KeyHandler keyH)
 	public Player (GamePanel gp, KeyHandler keyH) {
 		
-		this.gp = gp;
-		this.keyH = keyH;
+		this.gp = gp; // Сохраняется ссылка на игровую панель
+		this.keyH = keyH; // Сохраняется ссылка на игровую панель
 
+		// Устанавливаются на середину экрана, отступая от каждого края на половину размера тайла.
+		// Это возвращает среднюю точку экрана
 		screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
 		screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
 		// Область столкновения
-		// Создание экземпляра абстрактного прямоугольника созданного в Entity и передача параметров в него
+		// Создание объекта прямоугольной области solidArea для регистрации столкновений.
+		// Указываются его размеры и смещение относительно спрайта.
 		solidArea = new Rectangle();
 		solidArea.x = 12;
 		solidArea.y = 16;
@@ -43,8 +47,8 @@ public class Player extends Entity{
 		solidArea.height = 20;
 
 		
-		setDefaultValues(); // Вызов метода для значений по умолчанию
-		getPlayerImage(); // Вызов метода ддя получения спрайтов анимации Player
+		setDefaultValues(); // Сохраняются значения по умолчанию для восстановления области столкновений.
+		getPlayerImage(); // Вызов метода для загрузки спрайтов анимации Player
 	}
 	
 	// Метод для установки значений игрока по умолчанию
@@ -59,7 +63,7 @@ public class Player extends Entity{
 		direction = "down";
 	}
 
-	// Метод получения спрайтов
+	//  Метод загружает спрайты анимации персонажа в 4 направлениях: вверх, вниз, вправо, влево
 	public void getPlayerImage() {
 
 		up1 = setup("player_up_1");
@@ -110,7 +114,7 @@ public class Player extends Entity{
 	// Метод обновления изменений в классе игрока Player
 	public void update () {
 
-		// Условие чтобы анимация спрайтов была заморожена пока не нажаты клавиши управления
+		// Условие при котором анимация спрайтов заморожена пока не нажаты клавиши управления
 		if(keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
 
 			if(keyH.upPressed) {

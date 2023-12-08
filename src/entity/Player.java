@@ -2,19 +2,14 @@ package entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
+
 
 import Main.GamePanel;
 import Main.KeyHandler;
-import Main.UtilityTool;
 
-import javax.imageio.ImageIO;
-
-//Класс Player наследующий  Entity
+//Класс Player наследующий Entity
 public class Player extends Entity{
-	
-	GamePanel gp; // Объявление переменной gp с типом GamePanel. Использование класса GamePanel
+
 	KeyHandler keyH; // Объявление переменной gp с типом KeyHandler. Использование класса управления KeyHandler
 
 	// Создание переменных позиции отрисовки игрока на экране
@@ -26,9 +21,10 @@ public class Player extends Entity{
 
 	// Метод конструктор для Player с аргументами (GamePanel gp, KeyHandler keyH)
 	public Player (GamePanel gp, KeyHandler keyH) {
-		
-		this.gp = gp; // Сохраняется ссылка на игровую панель
-		this.keyH = keyH; // Сохраняется ссылка на игровую панель
+
+		super(gp); // вызов конструктора супер класса этого класса
+
+		this.keyH = keyH; // принимает аргумент KeyHandler
 
 		// Устанавливаются на середину экрана, отступая от каждого края на половину размера тайла.
 		// Это возвращает среднюю точку экрана
@@ -39,11 +35,11 @@ public class Player extends Entity{
 		// Создание объекта прямоугольной области solidArea для регистрации столкновений.
 		// Указываются его размеры и смещение относительно спрайта.
 		solidArea = new Rectangle();
-		solidArea.x = 12;
-		solidArea.y = 16;
+		solidArea.x = 16;
+		solidArea.y = 12;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		solidArea.width = 16;
+		solidArea.width = 20;
 		solidArea.height = 20;
 
 		
@@ -66,51 +62,35 @@ public class Player extends Entity{
 	//  Метод загружает спрайты анимации персонажа в 4 направлениях: вверх, вниз, вправо, влево
 	public void getPlayerImage() {
 
-		up1 = setup("player_up_1");
-		up2 = setup("player_up_2");
-		up3 = setup("player_up_3");
-		up4 = setup("player_up_4");
-		up5 = setup("player_up_5");
-		up6 = setup("player_up_6");
+		up1 = setup("/Player/player_up_1");
+		up2 = setup("/Player/player_up_2");
+		up3 = setup("/Player/player_up_3");
+		up4 = setup("/Player/player_up_4");
+		up5 = setup("/Player/player_up_5");
+		up6 = setup("/Player/player_up_6");
 
-		down1 = setup("player_down_1");
-		down2 = setup("player_down_2");
-		down3 = setup("player_down_3");
-		down4 = setup("player_down_4");
-		down5 = setup("player_down_5");
-		down6 = setup("player_down_6");
+		down1 = setup("/Player/player_down_1");
+		down2 = setup("/Player/player_down_2");
+		down3 = setup("/Player/player_down_3");
+		down4 = setup("/Player/player_down_4");
+		down5 = setup("/Player/player_down_5");
+		down6 = setup("/Player/player_down_6");
 
-		right1 = setup("player_right_1");
-		right2 = setup("player_right_2");
-		right3 = setup("player_right_3");
-		right4 = setup("player_right_4");
-		right5 = setup("player_right_5");
-		right6 = setup("player_right_6");
+		right1 = setup("/Player/player_right_1");
+		right2 = setup("/Player/player_right_2");
+		right3 = setup("/Player/player_right_3");
+		right4 = setup("/Player/player_right_4");
+		right5 = setup("/Player/player_right_5");
+		right6 = setup("/Player/player_right_6");
 
-		left1 = setup("player_left_1");
-		left2 = setup("player_left_2");
-		left3 = setup("player_left_3");
-		left4 = setup("player_left_4");
-		left5 = setup("player_left_5");
-		left6 = setup("player_left_6");
-
+		left1 = setup("/Player/player_left_1");
+		left2 = setup("/Player/player_left_2");
+		left3 = setup("/Player/player_left_3");
+		left4 = setup("/Player/player_left_4");
+		left5 = setup("/Player/player_left_5");
+		left6 = setup("/Player/player_left_6");
 	}
 
-	public BufferedImage setup(String imageName) {
-
-		UtilityTool uTool = new UtilityTool();
-		BufferedImage image = null;
-
-		try {
-			image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/" + imageName +".png")));
-			image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		return image;
-	}
-	
 	// Метод обновления изменений в классе игрока Player
 	public void update () {
 
@@ -137,6 +117,10 @@ public class Player extends Entity{
 			// Проверка столкновения объектов
 			int objIndex =  gp.cCheck.checkObject(this, true);
 			pickUpObject(objIndex);
+
+			// Проверка столкновения с NPC
+			int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
 
 			// Если у collision ложное значение, игрок не может двигаться
 			if(!collisionOn) {
@@ -207,11 +191,19 @@ public class Player extends Entity{
 
 				case "Box" -> {
 					gp.ui.gameFinished = true;
-//					gp.stopMusic();
 					keyH.playMusic = false;
 					gp.playSE(4);
+					gp.obj[i] = null;
                 }
             }
+		}
+
+	}
+
+	public void interactNPC (int i) {
+
+		if(i != 999) {
+			System.out.println("столкновение с неписем");
 		}
 
 	}

@@ -6,19 +6,22 @@ import Main.UtilityTool;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+// Определяет общие свойства игрового объекта на карте для последующего наследования конкретными типами объектов
 public class SuperObject {
 
-    public BufferedImage image;
-    public String name;
-    public boolean collision = false;
-    public  int worldX, worldY;
-    public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public BufferedImage image; // изображение объекта
+    public String name; // имя, может использоваться для задания типа
+    public boolean collision = false; // установка флага наличия коллизии с указанным значением
+    public  int worldX, worldY; // координаты объекта на игровой карте мира
+    public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // прямоугольная область для проверки столкновений
+
+    // Задают смещение зоны проверки столкновений относительно изображения
     public int solidAreaDefaultX = 0;
     public int solidAreaDefaultY = 0;
-    UtilityTool uTool = new UtilityTool();
+    UtilityTool uTool = new UtilityTool(); // вспомогательный класс для масштабирования изображений
 
 
-    // Метод отрисовки объектов
+    // В методе draw() происходит отрисовка объекта в экранных координатах с учетом смещения камеры игрока
     public void draw(Graphics2D g2, GamePanel gp) {
 
         int screenX = worldX - gp.player.worldX + gp.player.screenX;

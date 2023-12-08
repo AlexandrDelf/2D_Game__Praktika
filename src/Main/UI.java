@@ -1,4 +1,4 @@
-// Класс пользовательского интерфейса, обработка всего экранного интерфейса (текстовые сообщения, значки предметов и.д.)
+// Класс пользовательского интерфейса, обработка всего экранного интерфейса (текстовые сообщения, значки предметов и тд.)
 
 package Main;
 
@@ -7,12 +7,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 
-// Этот фрагмент кода инициализирует класс UI, отвечающий за интерфейс пользователя в игре.
+// Инициализирует класс UI, отвечающий за интерфейс пользователя в игре
 public class UI {
 
-    GamePanel gp; // ссылка на игровую панель GamePanel для последующего доступа.
-    Font sitka_30, sitka_50B; // Инициализируются переменные шрифтов.
-    BufferedImage keyImage;  // Создается объект ключа из класса OBJ_Key и сохраняется его изображение в переменную keyImage.
+    GamePanel gp; // ссылка на игровую панель GamePanel
+    Graphics2D g2;
+    Font sitka_30, sitka_50B; // Инициализируются переменные шрифтов
+    BufferedImage keyImage;  // Создается объект ключа из класса OBJ_Key и сохраняется его изображение в переменную keyImage
 
     public boolean messageOn = false;
     public String message = "";
@@ -47,9 +48,21 @@ public class UI {
 
     public void draw(Graphics2D g2) {
 
-        // Проверка закончена ли игра
-        if (gameFinished) {
+        this.g2 = g2;
 
+        g2.setFont(sitka_30);
+        g2.setColor(Color.white);
+
+        if(gp.gameState == gp.playState) {
+            //
+        }
+        if(gp.gameState == gp.pauseState){
+            drawPauseScreen();
+        }
+
+        if (gameFinished) { // Проверка закончена ли игра, если игра завершена - рисуем финальный текст:
+
+            // Устанавливаем шрифт, цвет
             g2.setFont(sitka_30);
             g2.setColor(Color.white);
 
@@ -58,15 +71,16 @@ public class UI {
             int x;
             int y;
 
-            text = "Ты нашёл коробку!";
-            // Получение длины строки
-            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+            text = "Ты нашёл коробку!"; // текст, который появляется при взаимодействии
+
+            textLength = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth(); // получение длины строки
+
             // Выравнивание текста
             x = gp.screenWidth/2 - textLength/2;
             y = gp.screenHeight/2 - (gp.tileSize);
-            // Отрисовка текста
-            g2.drawString(text, x, y);
 
+
+            // Отрисовка текста
             g2.setColor(Color.orange);
             text = "время: " + dFormat.format(playTime) + " сек.";
             // Получение длины строки
@@ -101,7 +115,7 @@ public class UI {
 
             // Время прохождения уровня
             playTime +=(double)1/60;
-            g2.drawString("Time:"+ dFormat.format(playTime), gp.tileSize * 12, 65);
+//            g2.drawString("Time:"+ dFormat.format(playTime), gp.tileSize * 12, 65);
 
             // Сообщение
             if(messageOn) {
@@ -120,5 +134,21 @@ public class UI {
                 }
             }
         }
+    }
+    public void drawPauseScreen() {
+
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60));
+        String text = "ПАУЗА";
+        int x = getXCenterText(text);
+        int y = gp.screenHeight/2;
+
+        g2.drawString (text, x, y);
+    }
+
+    public int getXCenterText(String text) {
+
+        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
+        int x = gp.screenWidth/2 - length/2;
+        return x;
     }
 }

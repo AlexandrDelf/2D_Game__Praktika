@@ -14,21 +14,22 @@ import java.util.Objects;
 public class TileManager {
 
     GamePanel gp; // Использование методов рисования из игровой панели
-    public Tile[] tile; //
-    public int[][] mapTileNum; //Создание переменной массива;
+    public Tile[] tile;
+    public int[][] mapTileNum; // Создание переменной массива
 
     // Конструктор
     public TileManager(GamePanel gp) {
 
-        this.gp = gp;
+        this.gp = gp; // Сохраняется ссылка на игровую панель для доступа к переменным
 
         // Количество видов плитки
         tile = new Tile[99];
 
-        //Создание экземпляра MapTileNum
+        // Создаётся двумерный массив для хранения карты в виде номеров плиток
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         // Вызов метода получения плитки из конструктора
+        // Загружает изображения для всех плиток в массив
         getTileImage();
 
         // Вызов метода загрузки карты
@@ -40,23 +41,14 @@ public class TileManager {
 
             // placeholder
             setup(0, "grass00", false);
-
             setup(1, "grass00", false);
-
             setup(2, "grass00", false);
-
             setup(3, "grass00", false);
-
             setup(4, "grass00", false);
-
             setup(5, "grass00", false);
-
             setup(6, "grass00", false);
-
             setup(7, "grass00", false);
-
             setup(8, "grass00", false);
-
             setup(9, "grass00", false);
             // placeholder
 
@@ -83,6 +75,9 @@ public class TileManager {
             setup(23, "tree01", true);
             setup(24, "tree02", true);
 
+            // Плитка камень
+            setup(25, "stone00", true);
+
             // Плитка воды
             setup(30, "water00", true);
             setup(31, "waterEdge1", true);
@@ -98,23 +93,31 @@ public class TileManager {
             setup(41, "waterCornerIn3", true);
             setup(42, "waterCornerIn4", true);
 
-            // Плитка поверхностей
-            setup(80, "asphalt00", false);
-
-
+            // Плитка тропинка
+            setup(50, "trail00", false);
+            setup(55, "trailCornerOut1", false);
+            setup(56, "trailCornerOut2", false);
+            setup(57, "trailCornerOut3", false);
+            setup(58, "trailCornerOut4", false);
+            setup(59, "trailEdge1", false);
+            setup(60, "trailEdge2", false);
+            setup(61, "trailEdge3", false);
+            setup(62, "trailEdge4", false);
 
     }
 
+    // Метод загружает изображение тайла по его индексу и настраивает параметры
     public void setup(int index, String imageName, boolean collision) {
 
-        UtilityTool uTool = new UtilityTool();
+        UtilityTool uTool = new UtilityTool(); // Создаёт вспомогательный объект UtilityTool для масштабирования изображения
 
+        // Блок try-catch для обработки возможных ошибок
         try {
 
-            tile[index] = new Tile (); // Экземпляр новой плитки
-            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imageName +".png")));
-            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
-            tile[index].collision = collision;
+            tile[index] = new Tile (); // cоздаёт новый объект Tile и сохраняется в массив по индексу
+            tile[index].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/tiles/" + imageName +".png"))); // изображение загружается из папки ресурсов tile по имени файла
+            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize); // масштабирует загруженное изображение до размера тайла карты
+            tile[index].collision = collision; // устанавливается значение поля collision - является ли этот тайл препятствием
 
         }catch(IOException e) {
             e.printStackTrace();
@@ -173,14 +176,14 @@ public class TileManager {
 
             int tileNum = mapTileNum[worldCol][worldRow]; // Получает номер тайла в массиве карты mapTileNum по координатам.
 
-            // Вычисляем мировые координаты тайла и экранные относительно игрока.
+            // Вычисляет мировые координаты тайла и экранные относительно игрока
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-            // Проверяем, попадает ли тайл в видимую игроком область экрана
-            // Если да - отрисовываем его изображение в соответствующих экранных координатах
+            // Проверяет, попадает ли тайл в видимую игроком область экрана
+            // Если да - отрисовывает его изображение в соответствующих экранных координатах
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                 worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
@@ -188,8 +191,8 @@ public class TileManager {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, null);
             }
 
-            // Инкрементируем счётчики тайлов и переходим к следующему
-
+            // Реализует переход к следующему тайлу карты при её отрисовке в цикле
+            // Позволяет организовать перебор всех тайлов карты построчно слева направо в цикле для отрисовки или обработки
             worldCol ++;
 
             if(worldCol == gp.maxWorldCol) {

@@ -5,11 +5,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.net.URL;
 
+// класс для загрузки и воспроизведения звуков в игре по индексу из массива ресурсов
 public class Sound {
-    Clip clip;
-    URL[] soundURL = new URL[30];
+    Clip clip; // объект класса Clip для воспроизведения аудио
+    URL[] soundURL = new URL[30]; // содержит ссылки на аудио ресурсы в папке проекта
 
-    // Создание конструктора
+    // В конструкторе происходит инициализация элементов этого массива на конкретные wav файлы звуков
     public Sound() {
 
         soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
@@ -20,10 +21,11 @@ public class Sound {
 
     }
 
-    public void setFile(int i) { // Получение целого числа в качестве аргумента
+    public void setFile(int i) { // Получение целого числа в качестве аргумента, принимает индекс звука в массиве URL[]
 
         try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]); // по индексу получает ресурс в виде потока AudioInputStream
+            // На основе этого потока создается объект Clip и вызывает метод open() для загрузки данных
             clip = AudioSystem.getClip();
             clip.open(ais);
 
@@ -31,16 +33,20 @@ public class Sound {
         }
 
     }
+
+    // Метод play() запускает воспроизведение звука один раз
     public void play() {
 
         clip.start();
     }
 
+    // Метод loop() зацикливает звук с помощью флага Clip.LOOP_CONTINUOUSLY
     public void loop() {
 
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    // Метод stop() останавливает воспроизведение
     public void stop() {
 
         clip.stop();

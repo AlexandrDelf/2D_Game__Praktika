@@ -6,11 +6,18 @@ import java.awt.event.KeyListener;
 //  Реализует обработку нажатия клавиш в приложении.
 public class KeyHandler implements KeyListener{
 
+	GamePanel gp;
+
 	// Объявляются булевы переменные для отслеживания состояния клавиш передвижения.
 	public boolean upPressed, downPressed, leftPressed, rightPressed;
 
 	// Отладка
 	boolean checkDrawTime = false;
+
+	// Создание конструктора
+	public KeyHandler(GamePanel gp) {
+		this.gp = gp;
+	}
 
 	// Играть музыку
 	public boolean playMusic = true;
@@ -20,6 +27,7 @@ public class KeyHandler implements KeyListener{
 	public void keyTyped(KeyEvent e) {
 	}
 
+	// Метод получения клавиши
 	@Override
 	public void keyPressed(KeyEvent e) {
 
@@ -48,6 +56,16 @@ public class KeyHandler implements KeyListener{
 
 		// При нажатии на
 		if(code == KeyEvent.VK_P) { // Если нажата клавиша P
+			if(gp.gameState == gp.playState) {
+				gp.gameState = gp.pauseState;
+			}
+			else if (gp.gameState == gp.pauseState) {
+				gp.gameState = gp.playState;
+			}
+		}
+
+		// При нажатии на
+		if(code == KeyEvent.VK_N) { // Если нажата клавиша P
 			playMusic = !playMusic;
 		}
 

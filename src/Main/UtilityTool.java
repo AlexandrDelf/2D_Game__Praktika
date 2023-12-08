@@ -8,9 +8,7 @@ import java.awt.image.BufferedImage;
 public class UtilityTool {
 
     // Класс масштабирующий все буферизованные изображения
-    // scaleImage принимает оригинальное изображение, желаемую ширину и высоту.
-
-    public BufferedImage scaleImage(BufferedImage original, int width, int height) {
+    public BufferedImage scaleImage(BufferedImage original, int width, int height) { // scaleImage принимает оригинальное изображение, желаемую ширину и высоту.
 
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType()); // Создается новое пустое изображение scaledImage с указанными размерами.
         Graphics2D g2 = scaledImage.createGraphics(); // Получаем объект Graphics2D для рисования на этом изображении.

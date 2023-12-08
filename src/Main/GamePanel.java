@@ -2,7 +2,7 @@ package Main;
 
 // Импорт библиотек\пакетов
 
-import java.awt.Color; //  Библиотека для предоставления различных способов работы с цветом.
+import java.awt.Color; //  Библиотека для предоставления различных способов работы с цветом
 
 // Библиотеки для отрисовки графики
 import java.awt.Dimension;
@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel; // Импортируется класс JPanel из библиотеки Swing для создания панелей
 
 // Импортируются пользовательские пакеты entity, object, tile, содержащие классы игровых объектов, изображений и т.д.
+import entity.Entity;
 import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
@@ -34,18 +35,18 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 	//  Параметры карты мира
-	public final int maxWorldCol = 60; // Максимальное количество тайлов\плиток (колонок) по вертикали.
-	public final int maxWorldRow = 60; // Максимальное количество тайлов\плиток (строк) по горизонтали.
+	public final int maxWorldCol = 60; // Максимальное количество тайлов\плиток (колонок) по вертикали
+	public final int maxWorldRow = 60; // Максимальное количество тайлов\плиток (строк) по горизонтали
 
 
-	// FPS (кадры в секунду) определяет скорость игры. В данном случае игра работает при 60 кадрах в секунду.
+	// FPS (кадры в секунду) определяет скорость игры. В данном случае игра работает при 60 кадрах в секунду
 	int FPS = 60;
 
 	// Новый объект класса TileManager, используется для управления тайлами на карте
 	TileManager tileM = new TileManager(this);
 
 	// Инициализация управления с клавиатуры
-	KeyHandler keyH = new KeyHandler();
+	KeyHandler keyH = new KeyHandler(this);
 
 	// Инициализация класса музыки
 	Sound music = new Sound();
@@ -57,10 +58,10 @@ public class GamePanel extends JPanel implements Runnable{
 	// Проверка столкновений (CollisionCheck)
 	public CollisionCheck cCheck = new CollisionCheck(this);
 
-	// Создание экземпляра AssetSetter, используются для работы со спрайтами
+	// Создание экземпляра AssetSetter, используются для работы с обработкой размещения объектов
 	public AssetSetter aSetter = new AssetSetter(this);
 
-	// Экземпляр класса пользовательского интерфейса, используются для работы с пользовательским интерфейсом.
+	// Экземпляр класса пользовательского интерфейса
 	public  UI ui = new UI(this);
 
 	// Игровое время
@@ -72,6 +73,12 @@ public class GamePanel extends JPanel implements Runnable{
 	// Инициализация класса SuperObject
 	// Ограниченное число слотов для объектов
 	public SuperObject[] obj = new SuperObject[10];
+	public Entity[] npc = new Entity[10]; // NPC
+
+	// Состояния игры
+	public int gameState;
+	public final int playState = 1;
+	public final int pauseState = 2;
 
 
 	// Конструктор игровой панели GamePanel
@@ -84,14 +91,17 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true); // установка фокуса на компоненте?
 	}
 
-	// Метод setupGame() инициализирует игру.
+	// Настройка игры
 	public void setupGame () {
 
-		aSetter.setObject(); // Инициализация объектов на карте
+		aSetter.setObject(); // Инициализация метода обработки размещения объектов на карте
+		aSetter.setNPC(); // Инициализация метода
 		playMusic(0); // Проигрывание музыки
+		stopMusic(); // Остановка музыки
+		gameState = playState; // Состояние игры
 	}
 
-	// Метод startGameThread() создает новый поток Thread и вызывает его метод start() для запуска.
+	// Метод startGameThread() создает новый поток Thread и вызывает его метод start() для запуска
 	public void startGameThread () {
 
 		gameThread = new Thread(this); // Инициализация потока Thread
@@ -100,8 +110,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 	// Метод run() запускает игровой цикл.
 	public void run() {
-		// игровой поток (gameThread) продолжает выполняться, пока он не будет остановлен или уничтожен.
-		// он повторяет процесс внутри фигурных скобок,
+		// игровой поток (gameThread) продолжает выполняться, пока он не будет остановлен или уничтожен
+		// он повторяет процесс внутри фигурных скобок
 			while(gameThread != null) {
 
 				double drawInterval = (double) 1000000000 / FPS; // Так как используются наносекунды 1 млрд = 1 сек, делим секунду на переменную FPS
@@ -149,7 +159,18 @@ public class GamePanel extends JPanel implements Runnable{
 		// Метод обновления
 		public void update() {
 
-			player.update(); // обновление данных об игроке, вызывая метод update() у объекта player.
+			if (gameState == playState){
+				player.update(); // обновление данных об игроке, вызывая метод update() у объекта player
+                for (Entity entity : npc) {
+                    if (entity != null) {
+                        entity.update();
+                    }
+                }
+			}
+			if (gameState == pauseState) {
+				// ничего не происходит
+			}
+
 		}
 
 		// Метод отрисовки, один из стандартных методов рисования на Jpanel
@@ -164,9 +185,7 @@ public class GamePanel extends JPanel implements Runnable{
 				drawStart = System.nanoTime(); // проверка времени
 			}
 
-
-
-			// Вызов метода рисования внутри TileManager
+			// Вызов метода рисования TileManager
 			tileM.draw(g2);
 
 			// Вызов метода рисования объектов
@@ -174,7 +193,13 @@ public class GamePanel extends JPanel implements Runnable{
                 if (superObject != null) {
                     superObject.draw(g2, this);
                 }
+            }
 
+			// Вызов метода рисования npc
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.draw(g2);
+                }
             }
 
 			//  Вызов метода рисования игрока
@@ -183,8 +208,8 @@ public class GamePanel extends JPanel implements Runnable{
 			// Вызов метода пользовательского интерфейса
 			ui.draw(g2);
 
-			// Отладка, выводит время, которое потребовалось для отрисовки последнего кадра.
-			// Время отображается в наносекундах.
+			// Отладка, выводит время, которое потребовалось для отрисовки последнего кадра
+			// Время отображается в наносекундах
 			if (keyH.checkDrawTime) {
 
 				long drawEnd = System.nanoTime();
@@ -199,8 +224,8 @@ public class GamePanel extends JPanel implements Runnable{
 
 		}
 
-		// Метод playMusic() проигрывает музыкальный файл, выбранный с помощью параметра i.
-		// Если файл не указан (например, если i равен 0), будет проигран файл по умолчанию.
+		// Метод playMusic() проигрывает музыкальный файл, выбранный с помощью параметра i
+		// Если файл не указан (например, если i равен 0), будет проигран файл по умолчанию
 		public void playMusic(int i) {
 
 			music.setFile(i); // Выбор необходимого файла
@@ -213,7 +238,7 @@ public class GamePanel extends JPanel implements Runnable{
 			music.stop(); // Остановка музыки
 		}
 
-		// Метод playSE() проигрывает звуковой эффект, выбранный с помощью параметра i.
+		// Метод playSE() проигрывает звуковой эффект, выбранный с помощью параметра i
 		public void playSE(int i) {
 
 			se.setFile(i); // Выбор необходимого файла

@@ -21,8 +21,8 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable{
 
 	// Настройки экрана приложения
-	final int originalTileSize = 16; // Размер стандартной плитки по умолчанию 16x16
-	final int scale = 3; // Переменная масштабирования
+	final int originalTileSize = 24; // Размер стандартной плитки по умолчанию 16x16
+	final int scale = 2; // Переменная масштабирования
 
 	public final int tileSize = originalTileSize * scale; // Размер выводимой на экран плитки 48x48
 	public final int maxScreenCol = 16; // Определение размера всего экрана по горизонтали, колонки
@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
 	TileManager tileM = new TileManager(this);
 
 	// Инициализация управления с клавиатуры
-	KeyHandler keyH = new KeyHandler(this);
+	public KeyHandler keyH = new KeyHandler(this);
 
 	// Инициализация класса музыки
 	Sound music = new Sound();
@@ -77,8 +77,11 @@ public class GamePanel extends JPanel implements Runnable{
 
 	// Состояния игры
 	public int gameState;
-	public final int playState = 1;
-	public final int pauseState = 2;
+	public final int titleState = 0; // титульный экран
+	public final int playState = 1; // игра запущена
+	public final int pauseState = 2; // игра остановлена
+	public final int dialogState = 3; // диалоги
+
 
 
 	// Конструктор игровой панели GamePanel
@@ -95,10 +98,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame () {
 
 		aSetter.setObject(); // Инициализация метода обработки размещения объектов на карте
-		aSetter.setNPC(); // Инициализация метода
-		playMusic(0); // Проигрывание музыки
-		stopMusic(); // Остановка музыки
-		gameState = playState; // Состояние игры
+		aSetter.setNPC(); // Инициализация метода npc
+		this.playMusic(0); // Проигрывание музыки
+		this.stopMusic(); // Остановка музыки
+		gameState = titleState; // Состояние игры
 	}
 
 	// Метод startGameThread() создает новый поток Thread и вызывает его метод start() для запуска
@@ -125,6 +128,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 				if(keyH.playMusic) {
 					music.play();
+					music.loop();
 				} else {
 					music.stop();
 				}
@@ -167,9 +171,9 @@ public class GamePanel extends JPanel implements Runnable{
                     }
                 }
 			}
-			if (gameState == pauseState) {
-				// ничего не происходит
-			}
+//			if (gameState == pauseState) {
+//				// ничего не происходит
+//			}
 
 		}
 
@@ -185,28 +189,36 @@ public class GamePanel extends JPanel implements Runnable{
 				drawStart = System.nanoTime(); // проверка времени
 			}
 
-			// Вызов метода рисования TileManager
-			tileM.draw(g2);
+			// Титульный экран (экран меню)
+			if(gameState == titleState) {
+				ui.draw(g2);
+			}
 
-			// Вызов метода рисования объектов
-            for (SuperObject superObject : obj) {
-                if (superObject != null) {
-                    superObject.draw(g2, this);
-                }
-            }
+			// Игровые объекты
+			else {
+				// Вызов метода рисования TileManager
+				tileM.draw(g2);
 
-			// Вызов метода рисования npc
-            for (Entity entity : npc) {
-                if (entity != null) {
-                    entity.draw(g2);
-                }
-            }
+				// Вызов метода рисования объектов
+				for (SuperObject superObject : obj) {
+					if (superObject != null) {
+						superObject.draw(g2, this);
+					}
+				}
 
-			//  Вызов метода рисования игрока
-			player.draw(g2);
+				// Вызов метода рисования npc
+				for (Entity entity : npc) {
+					if (entity != null) {
+						entity.draw(g2);
+					}
+				}
 
-			// Вызов метода пользовательского интерфейса
-			ui.draw(g2);
+				//  Вызов метода рисования игрока
+				player.draw(g2);
+
+				// Вызов метода пользовательского интерфейса
+				ui.draw(g2);
+			}
 
 			// Отладка, выводит время, которое потребовалось для отрисовки последнего кадра
 			// Время отображается в наносекундах
@@ -219,7 +231,6 @@ public class GamePanel extends JPanel implements Runnable{
 				System.out.println("Время отрисовки: "+passed);
 			}
 
-
 			g2.dispose(); // Утилизирует Graphics2D g2, код будет отрабатывать и без данной строчки, но это экономит ресурс
 
 		}
@@ -227,7 +238,6 @@ public class GamePanel extends JPanel implements Runnable{
 		// Метод playMusic() проигрывает музыкальный файл, выбранный с помощью параметра i
 		// Если файл не указан (например, если i равен 0), будет проигран файл по умолчанию
 		public void playMusic(int i) {
-
 			music.setFile(i); // Выбор необходимого файла
 			music.play(); // Запуск выбранного файла
 			music.loop(); // Зацикливание файла

@@ -50,10 +50,11 @@ public class AssetSetter {
         gp.obj[7].worldY = 16 * gp.tileSize;
     }
 
+    // Метод размещения npc
     public void setNPC() {
 
-        gp.npc[0] = new NPC_npcMan(gp);
-        gp.npc[0].worldX = gp.tileSize*49;
-        gp.npc[0].worldY = gp.tileSize*17;
+        gp.npc[0] = new NPC_npcMan(gp); // создание экземпляра
+        gp.npc[0].worldX = gp.tileSize*30; // размещение на карте по x
+        gp.npc[0].worldY = gp.tileSize*11; // размещение на карте по y
     }
 }

@@ -11,6 +11,8 @@ public class NPC_npcMan  extends Entity{
         speed = 1;
 
         getImage();
+        setDialogue();
+
     }
 
     //  Метод загружает спрайты анимации персонажа в 4 направлениях: вверх, вниз, вправо, влево
@@ -45,15 +47,24 @@ public class NPC_npcMan  extends Entity{
         left6 = setup("/npc/npcMan_left_6");
     }
 
+    public void setDialogue() {
+        dialogues[0] = "Ты тоже не можешь найти ключи?";
+        dialogues[2] = "Кто тут понаставил этих дверей?";
+        dialogues[3] = "Однажды я, где-то здесь неподалёку, \nпотерял ещё очень годные кроссовки...";
+        dialogues[1] = "Найти бы коробку и закончить всё это!";
+        dialogues[4] = "Когда-то у меня были шикарные волосы,\nне то чтобы я по ним сильно скучал...";
+    }
+
     public void setAction() {
 
-        actionLockCounter ++;
+        actionLockCounter ++; // счетчик actionLockCounter увеличивается
 
-        if(actionLockCounter == 120) {
+        if(actionLockCounter == 120) { // если счётчик достигает значения 120, создается новый случайный экземпляр класса Random
 
             Random random = new Random();
             int i = random.nextInt(100)+1; // выборка числа от 1 до 100
 
+            //  В зависимости от выбранного числа устанавливается направление движения
             if(i <=25) {
                 direction = "up";
             }
@@ -67,7 +78,13 @@ public class NPC_npcMan  extends Entity{
                 direction = "left";
             }
 
-            actionLockCounter = 0;
+            actionLockCounter = 0; // сброс счётчика на ноль
+
         }
     }
+    // Метод для уникальных диалогов npc с игроком
+    public void speak() {
+        super.speak();
+    }
+
 }

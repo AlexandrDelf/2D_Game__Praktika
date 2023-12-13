@@ -200,10 +200,20 @@ public class Player extends Entity{
 
 	}
 
+	// метод взаимодействия с NPC
 	public void interactNPC (int i) {
 
+/*
+		if(i != 999) if (gp.keyH.enterPressed) {
+            gp.gameState = gp.dialogState;
+            gp.npc[i].speak();
+        }
+		gp.keyH.enterPressed = false;
+*/
+
 		if(i != 999) {
-			System.out.println("столкновение с неписем");
+			gp.gameState = gp.dialogState;
+			gp.npc[i].speak();
 		}
 
 	}

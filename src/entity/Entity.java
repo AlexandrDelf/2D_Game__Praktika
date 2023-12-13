@@ -34,26 +34,61 @@ public class Entity {
 
 	public int solidAreaDefaultX, solidAreaDefaultY; // Координаты этой области по умолчанию.
 	public boolean collisionOn = false; // Флаг регистрации столкновений collisionOn
+	public int actionLockCounter = 0; // сброс счётчика
 
-	public int actionLockCounter = 0;
+	// Массив строк dialogues размером 20 элементов
+	String[] dialogues = new String[20];
+	int dialogIndex = 0;
+
+
 
 	// Конструктор для абстрактной сущности
 	public Entity (GamePanel gp) {
+
 		this.gp = gp;
 	}
 
 	public void setAction() {
 	}
+
+	// Метод для диалогов npc с игроком
+	public void speak() {
+
+			// После последнего по индексу диалога переходит к первому по индексу
+			if (dialogues[dialogIndex] == null) {
+				dialogIndex = 0;
+			}
+			gp.ui.currentDialog = dialogues[dialogIndex];
+			dialogIndex++;
+
+			// В зависимости от направления игрока устанавливается направление
+			// Пример - если направление игрока вверх, то направление будет вниз
+			switch (gp.player.direction) {
+				case "up" -> direction = "down";
+				case "down" -> direction = "up";
+				case "left" -> direction = "right";
+				case "right" -> direction = "left";
+			}
+	}
+
+	// Метод обновления игрового объекта
 	public void update() {
 
-		setAction();
+		setAction(); // вызов метода для установки текущего действия (описан в классе npcMan)
 
-		collisionOn = false;
+		collisionOn = false; //  флаг отслеживающий столкновения в false перед проверкой столкновений
+
+		// Проверяет, столкнулся ли этот объект с какими-либо плитками на карте, устанавливает collisionOn в true если да
 		gp.cCheck.checkTile(this);
-		gp.cCheck.checkObject(this, false);
-		gp.cCheck.checkPlayer(this);
 
-		// Если у collision ложное значение, игрок не может двигаться
+		// Проверяет, столкнулся ли этот объект с другими игровыми объектами, значение false означает,
+		// что этот объект не должен "уничтожаться" если произойдёт столкновение.
+		gp.cCheck.checkObject(this, false);
+
+		gp.cCheck.checkPlayer(this); // Проверяет, столкнулся ли этот объект конкретно с игроком.
+
+		// Проверяется collisionOn - если столкновений не было,
+		// обновит позицию в игровом мире в соответствии с направлением движения.
 		if(!collisionOn) {
 
 			switch (direction) {
@@ -88,15 +123,17 @@ public class Entity {
 		// Инициализация переменной image типа BufferedImage
 		BufferedImage image = null;
 
-		int screenX = worldX - gp.player.worldX + gp.player.screenX;
-		int screenY = worldY - gp.player.worldY + gp.player.screenY;
+		// Координатами спрайта на экране относительно текущего положения игрока
+		int screenX = worldX - gp.player.worldX + gp.player.screenX; // вычисляются координаты screenX
+		int screenY = worldY - gp.player.worldY + gp.player.screenY; // вычисляются координаты screenY
 
+		// Условие, которое проверяет, находится ли спрайт в пределах видимости игрока
 		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
 				worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
 				worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
 				worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
 
-			// Условная конструкция. Перебирает варианты направления движения npc, для выбора нужного спрайта
+			// Перебирает варианты направления движения npc, для выбора нужного спрайта
 			switch (direction) {
 				case "up" -> {
 					if (spriteNum == 1) {
@@ -202,3 +239,4 @@ public class Entity {
 	}
 
 }
+

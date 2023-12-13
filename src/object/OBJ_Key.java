@@ -10,7 +10,7 @@ import java.util.Objects;
 // Класс наследуется от родительского SuperObject
 public class OBJ_Key extends SuperObject{
 
-    GamePanel gp; // сохраняет ссылку на игровую панель для доступа к переменным и методам
+//    GamePanel gp; // сохраняет ссылку на игровую панель для доступа к переменным и методам
     public OBJ_Key(GamePanel gp) {
 
         name = "Key";

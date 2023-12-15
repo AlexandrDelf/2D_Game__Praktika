@@ -77,7 +77,7 @@ public class KeyHandler implements KeyListener{
 		// Состояние игры
 		if (gp.gameState == gp.playState) {
 
-			if(code == KeyEvent.VK_ESCAPE) {
+			if(code == KeyEvent.VK_ESCAPE) { // Переход в состояние титульного экрана по нажатию esc
 				gp.gameState = gp.titleState;
 				if (this.playMusic) {
 					gp.stopMusic();
@@ -130,7 +130,7 @@ public class KeyHandler implements KeyListener{
 		}
 		// Состояние диалог
 		else if(gp.gameState == gp.dialogState) {
-			if(code == KeyEvent.VK_ENTER){
+			if(code == KeyEvent.VK_ENTER || code == KeyEvent.VK_ESCAPE || code == KeyEvent.VK_SPACE){
 				gp.gameState = gp.playState;
 			}
 		}

@@ -93,16 +93,27 @@ public class TileManager {
             setup(41, "waterCornerIn3", true);
             setup(42, "waterCornerIn4", true);
 
+            // Плитка асфальт
+            setup(50, "asphalt00", false);
+            setup(55, "asphaltCornerOut1", false);
+            setup(56, "asphaltCornerOut2", false);
+            setup(57, "asphaltCornerOut3", false);
+            setup(58, "asphaltCornerOut4", false);
+            setup(59, "asphaltEdge1", false);
+            setup(60, "asphaltEdge2", false);
+            setup(61, "asphaltEdge3", false);
+            setup(62, "asphaltEdge4", false);
+
             // Плитка тропинка
-            setup(50, "trail00", false);
-            setup(55, "trailCornerOut1", false);
-            setup(56, "trailCornerOut2", false);
-            setup(57, "trailCornerOut3", false);
-            setup(58, "trailCornerOut4", false);
-            setup(59, "trailEdge1", false);
-            setup(60, "trailEdge2", false);
-            setup(61, "trailEdge3", false);
-            setup(62, "trailEdge4", false);
+            setup(63, "trail00", false);
+            setup(64, "trailCornerOut1", false);
+            setup(65, "trailCornerOut2", false);
+            setup(66, "trailCornerOut3", false);
+            setup(67, "trailCornerOut4", false);
+            setup(68, "trailEdge1", false);
+            setup(69, "trailEdge2", false);
+            setup(70, "trailEdge3", false);
+            setup(71, "trailEdge4", false);
 
     }
 

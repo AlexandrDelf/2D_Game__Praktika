@@ -39,8 +39,8 @@ public class Player extends Entity{
 		solidArea.y = 20;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		solidArea.width = 24;
-		solidArea.height = 24;
+		solidArea.width = 16;
+		solidArea.height = 16;
 
 		
 		setDefaultValues(); // Сохраняются значения по умолчанию для восстановления области столкновений.

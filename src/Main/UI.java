@@ -104,13 +104,9 @@ public class UI {
             drawDialogScreen();
         }
 
-
         // При окончании игры
         if (gameFinished) { // Проверка закончена ли игра, если игра завершена - рисуем финальный текст:
 
-            // Установки (шрифт/цвет/размер)
-
-            // Переменные для поздравительного текста
             String titleTimeText;
             int titleTimeTextLength;
             int titleTimeTextX;
@@ -127,7 +123,7 @@ public class UI {
             // Отрисовка текста
             drawString(g2, titleTimeText, titleTimeTextX, titleTimeTextY);
 
-            // Переменные для поздравительного текста
+            // Переменные для текста времени прохождения
             String timeText;
             int timeTextLength;
             int timeTextX;
@@ -163,6 +159,7 @@ public class UI {
             // Остановка потока игры
             gp.gameThread = null;
         }
+
     }
 
     // Метод рисования титульного экрана
@@ -194,7 +191,7 @@ public class UI {
         // Меню
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
 
-        text = "НОВАЯ ИГРА";
+        text = "ИГРАТЬ";
         x = getXCenterText(text);
         y += gp.tileSize*4;
         g2.drawString(text, x, y);
@@ -209,7 +206,6 @@ public class UI {
         if(commandNum == 1) {
             g2.drawString("*", x-gp.tileSize, y);
         }
-
 
     }
 
@@ -242,20 +238,20 @@ public class UI {
             g2.drawString(line, x, y);
             y +=  40;
         }
-
     }
+
+    // Стили диалогового окна
     public void drawSubWindow(int x, int y, int width, int height) {
 
-        Color color = new Color(0,0,0,205);
-        g2.setColor(color);
-        g2.fillRoundRect(x, y, width, height, 50, 50);
+        Color color = new Color(0,0,0,205); // номер цвета
+        g2.setColor(color); // цвет
+        g2.fillRoundRect(x, y, width, height, 50, 50); // скругление краев
 
-        color = new Color(255,255,255);
-        g2.setColor(color);
-        g2.setStroke(new BasicStroke(6));
-        g2.drawRoundRect(x, y, width, height, 50, 50);
+        color = new Color(255,255,255); // номер цвета
+        g2.setColor(color); // установка шрифта
+        g2.setStroke(new BasicStroke(6)); // обводка
+        g2.drawRoundRect(x, y, width, height, 50, 50); // скругление краев
     }
-
 
     // Метод получения центра текста
     public int getXCenterText(String text) {

@@ -9,7 +9,7 @@ public class KeyHandler implements KeyListener{
 	GamePanel gp;
 
 	// Объявляются булевы переменные для отслеживания состояния клавиш передвижения.
-	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed; // на будущее enterPressed
 
 	// Отладка
 	boolean checkDrawTime = false;
@@ -65,6 +65,14 @@ public class KeyHandler implements KeyListener{
 			}
 
 		}
+
+//		// Состояние gameFinished
+//		if (gp.gameState == gp.gameFinished) {
+//
+//			if (code == KeyEvent.VK_ESCAPE) {
+//				gp.gameState = gp.titleState;
+//			}
+//		}
 
 		// Состояние игры
 		if (gp.gameState == gp.playState) {

@@ -36,11 +36,11 @@ public class Player extends Entity{
 		// Указываются его размеры и смещение относительно спрайта.
 		solidArea = new Rectangle();
 		solidArea.x = 16;
-		solidArea.y = 12;
+		solidArea.y = 20;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		solidArea.width = 16;
-		solidArea.height = 20;
+		solidArea.width = 24;
+		solidArea.height = 24;
 
 		
 		setDefaultValues(); // Сохраняются значения по умолчанию для восстановления области столкновений.

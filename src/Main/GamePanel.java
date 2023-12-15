@@ -17,12 +17,14 @@ import entity.Player;
 import object.SuperObject;
 import tile.TileManager;
 
+//import static java.lang.Thread.sleep;
+
 // Новый класс GamePanel, подкласс JPanel
 public class GamePanel extends JPanel implements Runnable{
 
 	// Настройки экрана приложения
-	final int originalTileSize = 24; // Размер стандартной плитки по умолчанию 16x16
-	final int scale = 2; // Переменная масштабирования
+	final int originalTileSize = 16; // Размер стандартной плитки по умолчанию 16x16
+	final int scale = 3; // Переменная масштабирования
 
 	public final int tileSize = originalTileSize * scale; // Размер выводимой на экран плитки 48x48
 	public final int maxScreenCol = 16; // Определение размера всего экрана по горизонтали, колонки
@@ -81,6 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int playState = 1; // игра запущена
 	public final int pauseState = 2; // игра остановлена
 	public final int dialogState = 3; // диалоги
+//	public final int gameFinished = 4;
 
 
 
@@ -111,11 +114,21 @@ public class GamePanel extends JPanel implements Runnable{
 		gameThread.start(); // запуск потока Thread
 	}
 
-	// Метод run() запускает игровой цикл.
+	/*
+ Метод run() запускает игровой цикл.
 	public void run() {
+
+
 		// игровой поток (gameThread) продолжает выполняться, пока он не будет остановлен или уничтожен
 		// он повторяет процесс внутри фигурных скобок
 			while(gameThread != null) {
+
+				if(keyH.playMusic) {
+					music.play();
+					music.loop();
+				} else {
+					music.stop();
+				}
 
 				double drawInterval = (double) 1000000000 / FPS; // Так как используются наносекунды 1 млрд = 1 сек, делим секунду на переменную FPS
 				double nextDrawTime = System.nanoTime() + drawInterval; // System.nanoTime() Возвращает текущее время и прибавляет значение drawInterval
@@ -126,12 +139,7 @@ public class GamePanel extends JPanel implements Runnable{
 				// Нарисовать экран с обновлением информации
 				repaint();
 
-				if(keyH.playMusic) {
-					music.play();
-					music.loop();
-				} else {
-					music.stop();
-				}
+
 
 				// Переводит оставшееся время (remainingTime) в миллисекунды и проверяет, является ли оно меньше нуля.
 				// Если это так, то оставшееся время устанавливается равным нулю.
@@ -144,7 +152,7 @@ public class GamePanel extends JPanel implements Runnable{
 						remainingTime = 0;
 					}
 
-					Thread.sleep((long) remainingTime); // Останавливает игру пока ничего не происходит.  Поток “засыпает” на определенное время, чтобы обеспечить плавную работу игры.
+					sleep((long) remainingTime); // Останавливает игру пока ничего не происходит.  Поток “засыпает” на определенное время, чтобы обеспечить плавную работу игры.
 
 
 					nextDrawTime += drawInterval; // Когда время сна заканчивается и возобновляется поток, добавляем интервал рисования
@@ -154,11 +162,57 @@ public class GamePanel extends JPanel implements Runnable{
 					// Здесь выводится сообщение об ошибке.
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.fillInStackTrace();
-					System.out.println(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		}
+*/
+
+	// Метод реализации основного игрового цикла (game loop)
+    public void run () {
+
+		double drawInterval = (double) 1000000000 / FPS; //  задание констант желаемого количества кадров в секунду (FPS) и интервала между отрисовкой кадров в наносекундах
+
+		// Переменные для подсчета времени и количества кадров:
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		long timer = 0;
+		int drawCount = 0;
+
+		// Начинается бесконечный цикл while, пока поток не будет остановлен
+		while (gameThread != null) {
+
+			// Проигрывается музыка, если флаг включен
+			if(keyH.playMusic) {
+				music.play();
+				music.loop();
+			} else {
+				music.stop();
+			}
+
+
+			currentTime = System.nanoTime();
+
+			delta += (currentTime - lastTime) / drawInterval;
+			timer += (currentTime - lastTime);
+			lastTime = currentTime;
+
+			if (delta >= 1) {
+				update();
+				repaint();
+				delta--;
+				drawCount++;
+			}
+
+			if(timer > 1000000000) {
+				System.out.println("FPS:" + drawCount);
+				drawCount = 0;
+				timer = 0;
+			}
+
+		}
+	}
 
 		// Метод обновления
 		public void update() {
@@ -193,7 +247,10 @@ public class GamePanel extends JPanel implements Runnable{
 			if(gameState == titleState) {
 				ui.draw(g2);
 			}
-
+//			// Состояние игра закончена
+//			if(gameState == gameFinished) {
+//				ui.draw(g2);
+//			}
 			// Игровые объекты
 			else {
 				// Вызов метода рисования TileManager

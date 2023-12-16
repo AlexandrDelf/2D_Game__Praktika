@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int playState = 1; // игра запущена
 	public final int pauseState = 2; // игра остановлена
 	public final int dialogState = 3; // диалоги
-//	public final int gameFinished = 4;
+	public final int gameFinished = 4;
 
 
 
@@ -244,7 +244,7 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 
 			// Титульный экран (экран меню)
-			if(gameState == titleState) {
+			if(gameState == titleState || gameState == pauseState) {
 				ui.draw(g2);
 			}
 //			// Состояние игра закончена

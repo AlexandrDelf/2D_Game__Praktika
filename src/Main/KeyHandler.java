@@ -34,7 +34,7 @@ public class KeyHandler implements KeyListener{
 		int code = e.getKeyCode(); // Возвращает значение нажатой клавиши
 
 		// Титульный экран
-		if (gp.gameState == gp.titleState) {
+		if (gp.gameState == gp.titleState || gp.gameState == gp.pauseState) {
 
 			if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) { // Если нажата клавиша W
 				gp.ui.commandNum--;
@@ -75,10 +75,10 @@ public class KeyHandler implements KeyListener{
 //		}
 
 		// Состояние игры
-		if (gp.gameState == gp.playState) {
+		if (gp.gameState == gp.playState || gp.gameState == gp.pauseState) {
 
 			if(code == KeyEvent.VK_ESCAPE) { // Переход в состояние титульного экрана по нажатию esc
-				gp.gameState = gp.titleState;
+				gp.gameState = gp.pauseState;
 				if (this.playMusic) {
 					gp.stopMusic();
 					this.playMusic = false;
@@ -107,9 +107,9 @@ public class KeyHandler implements KeyListener{
 			}
 
 			// При нажатии на P пауза
-			if(code == KeyEvent.VK_P) {
-				gp.gameState = gp.pauseState;
-			}
+//			if(code == KeyEvent.VK_P) {
+//				gp.gameState = gp.pauseState;
+//			}
 
 //			//При нажатии на Enter
 //			if(code == KeyEvent.VK_ENTER) {
@@ -122,10 +122,14 @@ public class KeyHandler implements KeyListener{
 			}
 		}
 
-		// Состояние пауза
-		else if(gp.gameState == gp.pauseState) {
-			if (code == KeyEvent.VK_P) { // Если нажата клавиша P
-				gp.gameState = gp.playState;
+//		 Состояние пауза
+		else if(gp.gameState == gp.gameFinished) {
+			if(code == KeyEvent.VK_ESCAPE) { // Переход в состояние титульного экрана по нажатию esc
+				gp.gameState = gp.pauseState;
+				if (this.playMusic) {
+					gp.stopMusic();
+					this.playMusic = false;
+				}
 			}
 		}
 		// Состояние диалог

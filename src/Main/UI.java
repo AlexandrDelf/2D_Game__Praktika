@@ -65,7 +65,7 @@ public class UI {
 
 
         // Состояние титульного экрана
-        if(gp.gameState == gp.titleState) {
+        if(gp.gameState == gp.titleState || gp.gameState == gp.pauseState) {
             drawTitleScreen();
         }
 
@@ -95,9 +95,9 @@ public class UI {
         }
 
         // Состояние пауза
-        if(gp.gameState == gp.pauseState){
-            drawPauseScreen();
-        }
+//        if(gp.gameState == gp.pauseState){
+//            drawPauseScreen();
+//        }
 
         // Состояние диалог
         if(gp.gameState == gp.dialogState) {
@@ -128,6 +128,7 @@ public class UI {
             int timeTextLength;
             int timeTextX;
             int timeTextY;
+            gp.gameState = gp.gameFinished;
 
             // Текст для времени прохождения
             g2.setFont(g2.getFont().deriveFont(48F));
@@ -155,15 +156,17 @@ public class UI {
             mainTextX = gp.screenWidth/2 - mainTextLength/2;
             mainTextY = gp.screenHeight/2 - (gp.tileSize*3);
             drawString(g2, mainText, mainTextX, mainTextY);
-
             // Остановка потока игры
-            gp.gameThread = null;
+//            gp.gameThread = null;
+//            gp.startGameThread();
         }
 
     }
 
     // Метод рисования титульного экрана
     public void drawTitleScreen() {
+        String exitText;
+        String gameText;
 
         // Основной цвет фона
         g2.setColor(new Color(57, 135, 92));
@@ -191,18 +194,21 @@ public class UI {
         // Меню
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
 
-        text = "ИГРАТЬ";
-        x = getXCenterText(text);
+        if (gp.gameState == gp.pauseState) {
+            gameText = "ПРОДОЛЖИТЬ";
+        }
+        else gameText = "НОВАЯ ИГРА";
+        x = getXCenterText(gameText);
         y += gp.tileSize*4;
-        g2.drawString(text, x, y);
+        g2.drawString(gameText, x, y);
         if(commandNum == 0) {
             g2.drawString("*", x-gp.tileSize, y);
         }
 
-        text = "ВЫХОД";
-        x = getXCenterText(text);
+        exitText = "ВЫХОД";
+        x = getXCenterText(exitText);
         y += gp.tileSize;
-        g2.drawString(text, x, y);
+        g2.drawString(exitText, x, y);
         if(commandNum == 1) {
             g2.drawString("*", x-gp.tileSize, y);
         }

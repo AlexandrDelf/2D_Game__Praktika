@@ -55,7 +55,7 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 6;
 
 		//Скорость игрока
-		speed = 8;
+		speed = 3;
 		direction = "down";
 	}
 
@@ -184,7 +184,7 @@ public class Player extends Entity{
 
                 case "Sneakers" -> {
                     gp.playSE(2);
-                    speed += 10;
+                    speed += 6;
                     gp.obj[i] = null;
 					gp.ui.showMessage("Кто-то оставил\nещё годные кроссовки!");
                 }

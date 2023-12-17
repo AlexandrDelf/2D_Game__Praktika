@@ -95,14 +95,18 @@ public class TileManager {
 
             // Плитка асфальт
             setup(50, "asphalt00", false);
-            setup(55, "asphaltCornerOut1", false);
-            setup(56, "asphaltCornerOut2", false);
-            setup(57, "asphaltCornerOut3", false);
-            setup(58, "asphaltCornerOut4", false);
-            setup(59, "asphaltEdge1", false);
-            setup(60, "asphaltEdge2", false);
-            setup(61, "asphaltEdge3", false);
-            setup(62, "asphaltEdge4", false);
+            setup(59, "asphaltCornerIn1", false);
+            setup(60, "asphaltCornerIn2", false);
+            setup(61, "asphaltCornerIn3", false);
+            setup(62, "asphaltCornerIn4", false);
+            setup(51, "asphaltCornerOut1", false);
+            setup(52, "asphaltCornerOut2", false);
+            setup(53, "asphaltCornerOut3", false);
+            setup(54, "asphaltCornerOut4", false);
+            setup(55, "asphaltEdge1", false);
+            setup(56, "asphaltEdge2", false);
+            setup(57, "asphaltEdge3", false);
+            setup(58, "asphaltEdge4", false);
 
             // Плитка тропинка
             setup(63, "trail00", false);
@@ -137,7 +141,7 @@ public class TileManager {
     }
 
    // Загрузка карты
-   // Текстовое описание карты разбирается и загружается в программный массив. В дальнейшем по этому массиву отрисовываются тайлы карты
+   // Текстовое описание карты разбирается и загружается в программный массив. В дальнейшем по этому массиву отрисовываются плитки карты
    public void loadMap(String filePath) {
 
         try {

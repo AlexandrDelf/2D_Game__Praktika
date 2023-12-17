@@ -43,7 +43,7 @@ public class Player extends Entity{
 		solidArea.height = 16;
 
 		
-		setDefaultValues(); // Сохраняются значения по умолчанию для восстановления области столкновений.
+//		setDefaultValues(); // Сохраняются значения по умолчанию для восстановления области столкновений.
 		getPlayerImage(); // Вызов метода для загрузки спрайтов анимации Player
 	}
 	
@@ -55,7 +55,7 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 6;
 
 		//Скорость игрока
-		speed = 3;
+		speed = 10;
 		direction = "down";
 	}
 

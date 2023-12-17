@@ -105,6 +105,8 @@ public class GamePanel extends JPanel implements Runnable{
 		this.playMusic(0); // Проигрывание музыки
 		this.stopMusic(); // Остановка музыки
 		gameState = titleState; // Состояние игры
+		player.setDefaultValues(); // Настройки для игрока по умолчанию
+
 	}
 
 	// Метод startGameThread() создает новый поток Thread и вызывает его метод start() для запуска
@@ -183,35 +185,35 @@ public class GamePanel extends JPanel implements Runnable{
 		// Начинается бесконечный цикл while, пока поток не будет остановлен
 		while (gameThread != null) {
 
-			// Проигрывается музыка, если флаг включен
-			if(keyH.playMusic) {
-				music.play();
-				music.loop();
-			} else {
-				music.stop();
-			}
-
-
-			currentTime = System.nanoTime();
-
-			delta += (currentTime - lastTime) / drawInterval;
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
-
-			if (delta >= 1) {
-				update();
-				repaint();
-				delta--;
-				drawCount++;
-			}
-
-			if(timer > 1000000000) {
-				System.out.println("FPS:" + drawCount);
-				drawCount = 0;
-				timer = 0;
-			}
-
+		// Проигрывается музыка, если флаг включен
+		if(keyH.playMusic) {
+			music.play();
+			music.loop();
+		} else {
+			music.stop();
 		}
+
+
+		currentTime = System.nanoTime();
+
+		delta += (currentTime - lastTime) / drawInterval;
+		timer += (currentTime - lastTime);
+		lastTime = currentTime;
+
+		if (delta >= 1) {
+			update();
+			repaint();
+			delta--;
+			drawCount++;
+		}
+
+		if(timer > 1000000000) {
+			System.out.println("FPS:" + drawCount);
+			drawCount = 0;
+			timer = 0;
+		}
+
+	}
 	}
 
 		// Метод обновления

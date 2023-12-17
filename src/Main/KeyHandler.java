@@ -75,7 +75,7 @@ public class KeyHandler implements KeyListener{
 //		}
 
 		// Состояние игры
-		if (gp.gameState == gp.playState || gp.gameState == gp.pauseState) {
+		if (gp.gameState == gp.playState) {
 
 			if(code == KeyEvent.VK_ESCAPE) { // Переход в состояние титульного экрана по нажатию esc
 				gp.gameState = gp.pauseState;
@@ -125,7 +125,9 @@ public class KeyHandler implements KeyListener{
 //		 Состояние пауза
 		else if(gp.gameState == gp.gameFinished) {
 			if(code == KeyEvent.VK_ESCAPE) { // Переход в состояние титульного экрана по нажатию esc
-				gp.gameState = gp.pauseState;
+				gp.ui.gameFinished = false;
+				gp.setupGame();
+				gp.gameState = gp.titleState;
 				if (this.playMusic) {
 					gp.stopMusic();
 					this.playMusic = false;

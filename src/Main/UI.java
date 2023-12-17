@@ -30,6 +30,7 @@ public class UI {
 
         this.gp = gp;
 
+        // Загрузка шрифтов
         try {
             InputStream is = getClass().getResourceAsStream("/fonts/yanoneKaffeesatz-Bold.ttf");
             assert is != null;
@@ -133,7 +134,7 @@ public class UI {
             // Текст для времени прохождения
             g2.setFont(g2.getFont().deriveFont(48F));
             g2.setColor(Color.orange);
-            timeText = "время: " + dFormat.format(playTime) + " мин.";
+            timeText = "время: " + dFormat.format(playTime) + " сек.";
             // Получение длины строки
             timeTextLength = (int)g2.getFontMetrics().getStringBounds(timeText, g2).getWidth();
             // Выравнивание текста
@@ -213,17 +214,6 @@ public class UI {
             g2.drawString("*", x-gp.tileSize, y);
         }
 
-    }
-
-    // Метод рисования паузы
-    public void drawPauseScreen() {
-
-        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 60));
-        String text = "ПАУЗА";
-        int x = getXCenterText(text);
-        int y = gp.screenHeight/2;
-
-        g2.drawString (text, x, y);
     }
 
     // Метод рисования окна диалогов

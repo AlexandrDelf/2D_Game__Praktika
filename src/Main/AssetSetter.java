@@ -18,7 +18,7 @@ public class AssetSetter {
     public void setObject(){
 
         gp.obj[0] = new OBJ_Key(gp);
-        gp.obj[0].worldX = 10 * gp.tileSize;
+        gp.obj[0].worldX = 11 * gp.tileSize;
         gp.obj[0].worldY = 8 * gp.tileSize;
 
         gp.obj[1] = new OBJ_Key(gp);
@@ -26,8 +26,8 @@ public class AssetSetter {
         gp.obj[1].worldY = 15 * gp.tileSize;
 
         gp.obj[2] = new OBJ_Key(gp);
-        gp.obj[2].worldX = 30 * gp.tileSize;
-        gp.obj[2].worldY = 15 * gp.tileSize;
+        gp.obj[2].worldX = 15 * gp.tileSize;
+        gp.obj[2].worldY = 39 * gp.tileSize;
 
         gp.obj[3] = new OBJ_Door(gp);
         gp.obj[3].worldX = 28 * gp.tileSize;
@@ -46,8 +46,8 @@ public class AssetSetter {
         gp.obj[6].worldY = 23 * gp.tileSize;
 
         gp.obj[7] = new OBJ_Sneakers(gp);
-        gp.obj[7].worldX = 51 * gp.tileSize;
-        gp.obj[7].worldY = 16 * gp.tileSize;
+        gp.obj[7].worldX = 10 * gp.tileSize;
+        gp.obj[7].worldY = 51 * gp.tileSize;
     }
 
     // Метод размещения npc

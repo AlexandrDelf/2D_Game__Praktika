@@ -106,6 +106,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.stopMusic(); // Остановка музыки
 		gameState = titleState; // Состояние игры
 		player.setDefaultValues(); // Настройки для игрока по умолчанию
+		ui.playTime = 0;
 
 	}
 
@@ -287,7 +288,7 @@ public class GamePanel extends JPanel implements Runnable{
 				long passed = drawEnd - drawStart;
 				g2.setColor(Color.white);
 				g2.drawString("Время отрисовки: " + passed, 10, 400);
-				System.out.println("Время отрисовки: "+passed);
+				System.out.println("Время отрисовки: " + passed);
 			}
 
 			g2.dispose(); // Утилизирует Graphics2D g2, код будет отрабатывать и без данной строчки, но это экономит ресурс

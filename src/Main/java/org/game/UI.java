@@ -23,6 +23,7 @@ public class UI {
     public boolean gameFinished = false;
     public String currentDialog = "";
     public int commandNum = 0;
+    int messageCounter = 0;
 
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00"); // Форматирование отображения времени
@@ -90,9 +91,16 @@ public class UI {
             if(messageOn) {
                 // Смена размера шрифта для сообщения
                 g2.setFont(g2.getFont().deriveFont(24F));
-
                 // Координаты отрисовки шрифта сообщения
                 drawString (g2, message, gp.tileSize/2, gp.tileSize*4);
+
+                messageCounter++;
+
+                if (messageCounter > 120) {
+                    messageCounter = 0;
+                    messageOn = false;
+                }
+
             }
         }
 
@@ -109,21 +117,21 @@ public class UI {
         // При окончании игры
         if (gameFinished) { // Проверка закончена ли игра, если игра завершена - рисуем финальный текст:
 
-            String titleTimeText;
-            int titleTimeTextLength;
-            int titleTimeTextX;
-            int titleTimeTextY;
-
-            g2.setFont(g2.getFont().deriveFont(48F));
-            g2.setColor(Color.orange);
-            titleTimeText = "БЕЗУМНАЯ СКОРОСТЬ";
-            // Получение длины строки
-            titleTimeTextLength = (int)g2.getFontMetrics().getStringBounds(titleTimeText, g2).getWidth();
-            // Выравнивание текста
-            titleTimeTextX = gp.screenWidth/2 - titleTimeTextLength/2;
-            titleTimeTextY = gp.screenHeight/2 + (gp.tileSize);
-            // Отрисовка текста
-            drawString(g2, titleTimeText, titleTimeTextX, titleTimeTextY);
+//            String titleTimeText;
+//            int titleTimeTextLength;
+//            int titleTimeTextX;
+//            int titleTimeTextY;
+//
+//            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+//            g2.setColor(Color.orange);
+//            titleTimeText = "БЕЗУМНАЯ СКОРОСТЬ";
+//            // Получение длины строки
+//            titleTimeTextLength = (int)g2.getFontMetrics().getStringBounds(titleTimeText, g2).getWidth();
+//            // Выравнивание текста
+//            titleTimeTextX = gp.screenWidth/2 - titleTimeTextLength/2;
+//            titleTimeTextY = gp.screenHeight/2 + (gp.tileSize);
+//            // Отрисовка текста
+//            drawString(g2, titleTimeText, titleTimeTextX, titleTimeTextY);
 
             // Переменные для текста времени прохождения
             String timeText;
@@ -133,14 +141,14 @@ public class UI {
             gp.gameState = gp.gameFinished;
 
             // Текст для времени прохождения
-            g2.setFont(g2.getFont().deriveFont(48F));
+            g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
             g2.setColor(Color.orange);
-            timeText = "время: " + dFormat.format(playTime) + " сек.";
+            timeText = "Время: " + dFormat.format(playTime) + " сек.";
             // Получение длины строки
             timeTextLength = (int)g2.getFontMetrics().getStringBounds(timeText, g2).getWidth();
             // Выравнивание текста
             timeTextX = gp.screenWidth/2 - timeTextLength/2;
-            timeTextY = gp.screenHeight/2 + (gp.tileSize*2);
+            timeTextY = gp.screenHeight/2 + gp.tileSize;
             // Отрисовка текста
             drawString(g2, timeText, timeTextX, timeTextY);
 

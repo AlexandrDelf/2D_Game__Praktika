@@ -43,7 +43,7 @@ public class AssetSetter {
 
         gp.obj[6] = new OBJ_Box(gp);
         gp.obj[6].worldX = 49 * gp.tileSize;
-        gp.obj[6].worldY = 46 * gp.tileSize;
+        gp.obj[6].worldY = 47 * gp.tileSize;
 
         gp.obj[7] = new OBJ_Sneakers(gp);
         gp.obj[7].worldX = 10 * gp.tileSize;

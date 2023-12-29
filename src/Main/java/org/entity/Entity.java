@@ -1,18 +1,21 @@
 package org.entity;
 
+
 import org.game.GamePanel;
 import org.game.UtilityTool;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
+
 import java.io.IOException;
 import java.util.Objects;
+
 
 //Родительский класс для класса Player и любых других классов персонажей
 public class Entity {
 
-	GamePanel gp;
+	public GamePanel gp;
 	public int worldX, worldY; // Позиция в мировых координатах: worldX, worldY
 	public int speed; // Скорость передвижения
 
@@ -128,98 +131,99 @@ public class Entity {
 		int screenY = worldY - gp.player.worldY + gp.player.screenY; // вычисляются координаты screenY
 
 		// Условие, которое проверяет, находится ли спрайт в пределах видимости игрока
-		if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-				worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
-				worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-				worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+        if (worldX + gp.tileSize <= gp.player.worldX - gp.player.screenX ||
+                worldX - gp.tileSize >= gp.player.worldX + gp.player.screenX ||
+                worldY + gp.tileSize <= gp.player.worldY - gp.player.screenY ||
+                worldY - gp.tileSize >= gp.player.worldY + gp.player.screenY) {
+            return;
+        }
 
-			// Перебирает варианты направления движения npc, для выбора нужного спрайта
-			switch (direction) {
-				case "up" -> {
-					if (spriteNum == 1) {
-						image = up1;
-					}
-					if (spriteNum == 2) {
-						image = up2;
-					}
-					if (spriteNum == 3) {
-						image = up3;
-					}
-					if (spriteNum == 4) {
-						image = up4;
-					}
-					if (spriteNum == 5) {
-						image = up5;
-					}
-					if (spriteNum == 6) {
-						image = up6;
-					}
-				} // Выход из условия
-				case "down" -> {
-					if (spriteNum == 1) {
-						image = down1;
-					}
-					if (spriteNum == 2) {
-						image = down2;
-					}
-					if (spriteNum == 3) {
-						image = down3;
-					}
-					if (spriteNum == 4) {
-						image = down4;
-					}
-					if (spriteNum == 5) {
-						image = down5;
-					}
-					if (spriteNum == 6) {
-						image = down6;
-					}
-				}
-				case "left" -> {
-					if (spriteNum == 1) {
-						image = left1;
-					}
-					if (spriteNum == 2) {
-						image = left2;
-					}
-					if (spriteNum == 3) {
-						image = left3;
-					}
-					if (spriteNum == 4) {
-						image = left4;
-					}
-					if (spriteNum == 5) {
-						image = left5;
-					}
-					if (spriteNum == 6) {
-						image = left6;
-					}
-				}
-				case "right" -> {
-					if (spriteNum == 1) {
-						image = right1;
-					}
-					if (spriteNum == 2) {
-						image = right2;
-					}
-					if (spriteNum == 3) {
-						image = right3;
-					}
-					if (spriteNum == 4) {
-						image = right4;
-					}
-					if (spriteNum == 5) {
-						image = right5;
-					}
-					if (spriteNum == 6) {
-						image = right6;
-					}
-				}
-			}
+        // Перебирает варианты направления движения npc, для выбора нужного спрайта
+        switch (direction) {
+            case "up" -> {
+                if (spriteNum == 1) {
+                    image = up1;
+                }
+                if (spriteNum == 2) {
+                    image = up2;
+                }
+                if (spriteNum == 3) {
+                    image = up3;
+                }
+                if (spriteNum == 4) {
+                    image = up4;
+                }
+                if (spriteNum == 5) {
+                    image = up5;
+                }
+                if (spriteNum == 6) {
+                    image = up6;
+                }
+            } // Выход из условия
+            case "down" -> {
+                if (spriteNum == 1) {
+                    image = down1;
+                }
+                if (spriteNum == 2) {
+                    image = down2;
+                }
+                if (spriteNum == 3) {
+                    image = down3;
+                }
+                if (spriteNum == 4) {
+                    image = down4;
+                }
+                if (spriteNum == 5) {
+                    image = down5;
+                }
+                if (spriteNum == 6) {
+                    image = down6;
+                }
+            }
+            case "left" -> {
+                if (spriteNum == 1) {
+                    image = left1;
+                }
+                if (spriteNum == 2) {
+                    image = left2;
+                }
+                if (spriteNum == 3) {
+                    image = left3;
+                }
+                if (spriteNum == 4) {
+                    image = left4;
+                }
+                if (spriteNum == 5) {
+                    image = left5;
+                }
+                if (spriteNum == 6) {
+                    image = left6;
+                }
+            }
+            case "right" -> {
+                if (spriteNum == 1) {
+                    image = right1;
+                }
+                if (spriteNum == 2) {
+                    image = right2;
+                }
+                if (spriteNum == 3) {
+                    image = right3;
+                }
+                if (spriteNum == 4) {
+                    image = right4;
+                }
+                if (spriteNum == 5) {
+                    image = right5;
+                }
+                if (spriteNum == 6) {
+                    image = right6;
+                }
+            }
+        }
 
-			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-		}
-	}
+        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+    }
 
 	// Метод осуществляет загрузку графических ресурсов в игру с предобработкой
 	public BufferedImage setup(String imagePath) {

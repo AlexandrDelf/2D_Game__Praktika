@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="2D_Game__Praktika:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/2D_Game__Praktika_jar</output-path>
-    <root id="archive" name="2D_Game__Praktika.jar">
-      <element id="module-output" name="2D_Game__Praktika" />
-    </root>
-  </artifact>
-</component>

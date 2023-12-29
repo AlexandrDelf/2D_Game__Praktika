@@ -2,10 +2,8 @@ package org.entity;
 
 import org.game.GamePanel;
 import org.game.KeyHandler;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
-
+import java.awt.*;
 
 //Класс Player наследующий Entity
 public class Player extends Entity{

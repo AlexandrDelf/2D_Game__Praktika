@@ -1,7 +1,6 @@
 package org.game;
 
 // Импорт библиотек\пакетов
-
 import org.entity.Entity;
 import org.entity.Player;
 import org.objects.SuperObject;
@@ -85,8 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int playState = 1; // игра запущена
 	public final int pauseState = 2; // игра остановлена
 	public final int dialogState = 3; // диалоги
-	public final int gameFinished = 4;
-
+	public final int gameFinished = 4; // победа
 
 
 	// Конструктор игровой панели GamePanel
@@ -109,6 +107,8 @@ public class GamePanel extends JPanel implements Runnable{
 		gameState = titleState; // Состояние игры
 		player.setDefaultValues(); // Настройки для игрока по умолчанию
 		ui.playTime = 0;
+		player.hasKey = 0;
+
 
 	}
 
@@ -185,38 +185,40 @@ public class GamePanel extends JPanel implements Runnable{
 		long timer = 0;
 		int drawCount = 0;
 
-		// Начинается бесконечный цикл while, пока поток не будет остановлен
+		// запускает бесконечный цикл while, который будет выполняться до тех пор, пока поток игры не будет остановлена
 		while (gameThread != null) {
 
-		// Проигрывается музыка, если флаг включен
-		if(keyH.playMusic) {
-			music.play();
-			music.loop();
-		} else {
-			music.stop();
+			// Проигрывает музыку, если флаг playMusic включен. В противном случае музыка останавливается
+			if(keyH.playMusic) {
+				music.play();
+				music.loop();
+			} else {
+				music.stop();
+			}
+
+
+			currentTime = System.nanoTime(); // Получает текущее время в наносекундах
+
+			// Вычисление разницы между текущим временем и прошлым временем, затем добавление разницы к счетчику времени.
+			// Обновление прошлого время на текущее время.
+			delta += (currentTime - lastTime) / drawInterval;
+			timer += (currentTime - lastTime);
+			lastTime = currentTime;
+
+			if (delta >= 1) {
+				update();
+				repaint();
+				delta--;
+				drawCount++;
+			}
+
+			if(timer > 1000000000) {
+				System.out.println("FPS:" + drawCount); // отображает сообщение в консоли (полезно на этапах разработки)
+				drawCount = 0;
+				timer = 0;
+			}
+
 		}
-
-
-		currentTime = System.nanoTime();
-
-		delta += (currentTime - lastTime) / drawInterval;
-		timer += (currentTime - lastTime);
-		lastTime = currentTime;
-
-		if (delta >= 1) {
-			update();
-			repaint();
-			delta--;
-			drawCount++;
-		}
-
-		if(timer > 1000000000) {
-			System.out.println("FPS:" + drawCount);
-			drawCount = 0;
-			timer = 0;
-		}
-
-	}
 	}
 
 		// Метод обновления
@@ -227,13 +229,9 @@ public class GamePanel extends JPanel implements Runnable{
                 for (Entity entity : npc) {
                     if (entity != null) {
                         entity.update();
-                    }
+					}
                 }
 			}
-//			if (gameState == pauseState) {
-//				// ничего не происходит
-//			}
-
 		}
 
 		// Метод отрисовки, один из стандартных методов рисования на Jpanel

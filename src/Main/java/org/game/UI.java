@@ -175,6 +175,8 @@ public class UI {
 
     // Метод рисования титульного экрана
     public void drawTitleScreen() {
+
+        // Переменные для пунктов меню
         String exitText;
         String gameText;
 
@@ -212,7 +214,7 @@ public class UI {
         y += gp.tileSize*4;
         g2.drawString(gameText, x, y);
         if(commandNum == 0) {
-            g2.drawString("*", x-gp.tileSize, y);
+            g2.drawString("~", x-gp.tileSize, y);
         }
 
         exitText = "ВЫХОД";
@@ -220,7 +222,7 @@ public class UI {
         y += gp.tileSize;
         g2.drawString(exitText, x, y);
         if(commandNum == 1) {
-            g2.drawString("*", x-gp.tileSize, y);
+            g2.drawString("~", x-gp.tileSize, y);
         }
 
     }

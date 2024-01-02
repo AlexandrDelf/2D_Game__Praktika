@@ -78,6 +78,7 @@ public class TileManager {
             // Плитка камень
             setup(25, "stone00", true);
             setup(26, "wall00", true);
+            setup(27, "box01", true);
 
 
             // Плитка воды

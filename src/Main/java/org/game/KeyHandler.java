@@ -35,7 +35,6 @@ public class KeyHandler implements KeyListener{
 
 		// Титульный экран "Новая игра"
 		if (gp.gameState == gp.titleState || gp.gameState == gp.pauseState) {
-			int num = gp.ui.commandNum;
 
 			if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) { // Если нажата клавиша W
 				gp.ui.commandNum--;

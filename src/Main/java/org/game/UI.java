@@ -22,7 +22,7 @@ public class UI {
     public String message = "";
     public boolean gameFinished = false;
     public String currentDialog = "";
-    public int commandNum = 0;
+    public int commandNum = 1;
     int messageCounter = 0;
 
     double playTime;
@@ -177,8 +177,9 @@ public class UI {
     public void drawTitleScreen() {
 
         // Переменные для пунктов меню
-        String exitText;
-        String gameText;
+        String newGameText = "НОВАЯ ИГРА";
+        String resumeText = "ПРОДОЛЖИТЬ";
+        String exitText = "ВЫХОД";
 
         // Основной цвет фона
         g2.setColor(new Color(57, 135, 92));
@@ -207,21 +208,29 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));
 
         if (gp.gameState == gp.pauseState) {
-            gameText = "ПРОДОЛЖИТЬ";
+            x = getXCenterText(resumeText);
+            y += gp.tileSize*4;
+            g2.drawString(resumeText, x, y);
+            if(commandNum == 0) {
+                g2.drawString("~", x-gp.tileSize, y);
+            }
         }
-        else gameText = "НОВАЯ ИГРА";
-        x = getXCenterText(gameText);
-        y += gp.tileSize*4;
-        g2.drawString(gameText, x, y);
-        if(commandNum == 0) {
+
+        x = getXCenterText(newGameText);
+        if (gp.gameState == gp.pauseState) {
+            y += gp.tileSize;
+        } else {
+            y += gp.tileSize*4;
+        }
+        g2.drawString(newGameText, x, y);
+        if(commandNum == 1) {
             g2.drawString("~", x-gp.tileSize, y);
         }
 
-        exitText = "ВЫХОД";
         x = getXCenterText(exitText);
         y += gp.tileSize;
         g2.drawString(exitText, x, y);
-        if(commandNum == 1) {
+        if(commandNum == 2) {
             g2.drawString("~", x-gp.tileSize, y);
         }
 

@@ -50,7 +50,7 @@ public class Player extends Entity{
 
 		// Позиция игрока на карте мира
 		worldX = gp.tileSize * 31;
-		worldY = gp.tileSize * 6;
+		worldY = gp.tileSize * 7;
 
 		//Скорость игрока
 		speed = 4;

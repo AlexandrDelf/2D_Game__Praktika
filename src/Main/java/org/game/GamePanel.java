@@ -20,7 +20,8 @@ import javax.swing.JPanel; // Импортируется класс JPanel из 
 
 //import static java.lang.Thread.sleep;
 
-// Новый класс GamePanel, подкласс JPanel
+// Новый класс является основным классом игры, который отвечает за её запуск и отрисовку.
+// Он расширяет класс JPanel, что позволяет использовать его в качестве компонента в приложении Java Swing.
 public class GamePanel extends JPanel implements Runnable{
 
 	// Настройки экрана приложения

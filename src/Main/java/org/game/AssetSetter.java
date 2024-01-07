@@ -19,7 +19,7 @@ public class AssetSetter {
     public void setObject(){
 
         gp.obj[0] = new OBJ_Key(gp);
-        gp.obj[0].worldX = 11 * gp.tileSize;
+        gp.obj[0].worldX = 12 * gp.tileSize;
         gp.obj[0].worldY = 9 * gp.tileSize;
 
         gp.obj[1] = new OBJ_Key(gp);
@@ -55,7 +55,7 @@ public class AssetSetter {
     public void setNPC() {
 
         gp.npc[0] = new NPC_npcMan(gp); // создание экземпляра
-        gp.npc[0].worldX = gp.tileSize*30; // размещение на карте по x
-        gp.npc[0].worldY = gp.tileSize*11; // размещение на карте по y
+        gp.npc[0].worldX = gp.tileSize*33; // размещение на карте по x
+        gp.npc[0].worldY = gp.tileSize*20; // размещение на карте по y
     }
 }

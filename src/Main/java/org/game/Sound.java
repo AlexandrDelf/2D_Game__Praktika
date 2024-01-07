@@ -1,5 +1,4 @@
 package org.game;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -13,12 +12,11 @@ public class Sound {
     // В конструкторе происходит инициализация элементов этого массива на конкретные wav файлы звуков
     public Sound() {
 
-        soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
+        soundURL[0] = getClass().getResource("/sound/Adventure.wav");
         soundURL[1] = getClass().getResource("/sound/coin.wav");
         soundURL[2] = getClass().getResource("/sound/powerup.wav");
         soundURL[3] = getClass().getResource("/sound/unlock.wav");
         soundURL[4] = getClass().getResource("/sound/fanfare.wav");
-
     }
 
     public void setFile(int i) { // Получение целого числа в качестве аргумента, принимает индекс звука в массиве URL[]
@@ -31,7 +29,6 @@ public class Sound {
 
         } catch (Exception ignored) {
         }
-
     }
 
     // Метод play() запускает воспроизведение звука один раз
@@ -39,13 +36,11 @@ public class Sound {
 
         clip.start();
     }
-
     // Метод loop() зацикливает звук с помощью флага Clip.LOOP_CONTINUOUSLY
     public void loop() {
 
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
-
     // Метод stop() останавливает воспроизведение
     public void stop() {
 

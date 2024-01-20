@@ -120,9 +120,9 @@ public class KeyHandler implements KeyListener{
 			}
 
 			// При нажатии на P пауза
-//			if(code == KeyEvent.VK_P) {
-//				gp.gameState = gp.pauseState;
-//			}
+			if(code == KeyEvent.VK_P) {
+				gp.gameState = gp.pauseState;
+			}
 
 //			//При нажатии на Enter
 //			if(code == KeyEvent.VK_ENTER) {

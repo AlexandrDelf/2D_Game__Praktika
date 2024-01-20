@@ -98,7 +98,7 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true); // установка фокуса на компоненте?
 	}
 
-	// Настройка игры
+	// Настройки игры при запуске
 	public void setupGame () {
 
 		aSetter.setObject(); // Инициализация метода обработки размещения объектов на карте
@@ -107,10 +107,9 @@ public class GamePanel extends JPanel implements Runnable{
 		this.stopMusic(); // Остановка музыки
 		gameState = titleState; // Состояние игры
 		player.setDefaultValues(); // Настройки для игрока по умолчанию
-		ui.playTime = 0;
-		player.hasKey = 0;
-
-
+		ui.playTime = 0; // Обнуление счётчика времени прохождения
+		player.hasKey = 0; // Обнуление количества ключей у игрока в начале игры
+		ui.messageCounter = 120; // Сброс сообщения для предметов
 	}
 
 	// Метод startGameThread() создает новый поток Thread и вызывает его метод start() для запуска
@@ -217,7 +216,7 @@ public class GamePanel extends JPanel implements Runnable{
 			// Проверка прошла ли 1 секунду. Если да, то она выводит в консоль текущее количество кадров.
 			// Затем она обнуляет счетчик кадров и счетчик времени.
 			if(timer > 1000000000) {
-				System.out.println("FPS:" + drawCount); // отображает сообщение в консоли (полезно на этапах разработки)
+				System.out.println("FPS:" + drawCount); // отображает сообщение в консоли (полезно на этапах оптимизации)
 				drawCount = 0;
 				timer = 0;
 			}

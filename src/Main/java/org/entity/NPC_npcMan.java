@@ -56,6 +56,7 @@ public class NPC_npcMan  extends Entity{
         dialogues[4] = "Гляди по сторонам внимательней! \nТут полно лисьих троп!";
     }
 
+    // Описание поведения npc
     public void setAction() {
 
         actionLockCounter ++; // счетчик actionLockCounter увеличивается

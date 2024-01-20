@@ -201,14 +201,6 @@ public class Player extends Entity{
 	// метод взаимодействия с NPC
 	public void interactNPC (int i) {
 
-/*
-		if(i != 999) if (gp.keyH.enterPressed) {
-            gp.gameState = gp.dialogState;
-            gp.npc[i].speak();
-        }
-		gp.keyH.enterPressed = false;
-*/
-
 		if(i != 999) {
 			gp.gameState = gp.dialogState;
 			gp.npc[i].speak();
@@ -243,7 +235,7 @@ public class Player extends Entity{
                 if (spriteNum == 6) {
                     image = up6;
                 }
-            } // Выход из условия
+            }
             case "down" -> {
                 if (spriteNum == 1) {
                     image = down1;

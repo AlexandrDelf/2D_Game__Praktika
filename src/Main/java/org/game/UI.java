@@ -4,6 +4,7 @@ package org.game;
 
 import org.objects.OBJ_Key;
 
+//import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -201,7 +202,7 @@ public class UI {
         // Изображение(любая плитка)
         x = gp.screenWidth/2 - gp.tileSize;
         y += gp.tileSize*2 - gp.tileSize;
-        g2.drawImage(gp.player.down1, x, y, gp.tileSize*2, gp.tileSize*2, null);
+        g2.drawImage(gp.player.icon, x, y, gp.tileSize*2, gp.tileSize*2, null); // Рисование изображения
 
         // Меню
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,48F));

@@ -60,6 +60,8 @@ public class Player extends Entity{
 	//  Метод загружает спрайты анимации персонажа в 4 направлениях: вверх, вниз, вправо, влево
 	public void getPlayerImage() {
 
+		icon = setup("/icon/icon");
+
 		up1 = setup("/player/player_up_1");
 		up2 = setup("/player/player_up_2");
 		up3 = setup("/player/player_up_3");

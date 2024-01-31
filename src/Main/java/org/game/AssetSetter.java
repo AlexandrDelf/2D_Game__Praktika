@@ -56,6 +56,6 @@ public class AssetSetter {
 
         gp.npc[0] = new NPC_npcMan(gp); // создание экземпляра
         gp.npc[0].worldX = gp.tileSize*33; // размещение на карте по x
-        gp.npc[0].worldY = gp.tileSize*20; // размещение на карте по y
+        gp.npc[0].worldY = gp.tileSize*29; // размещение на карте по y
     }
 }

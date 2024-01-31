@@ -187,7 +187,7 @@ public class UI {
 
         // Заголовок
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,108F));
-        String text = "Practice_Game";
+        String text = "Pixel_Game";
         int x = getXCenterText(text);
         int y = gp.tileSize*3;
 

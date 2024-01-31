@@ -49,8 +49,8 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 
 		// Позиция игрока на карте мира
-		worldX = gp.tileSize * 31;
-		worldY = gp.tileSize * 7;
+		worldX = gp.tileSize * 33;
+		worldY = gp.tileSize * 18;
 
 		//Скорость игрока
 		speed = 4;

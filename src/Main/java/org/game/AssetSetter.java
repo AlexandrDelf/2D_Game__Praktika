@@ -55,7 +55,7 @@ public class AssetSetter {
     public void setNPC() {
 
         gp.npc[0] = new NPC_npcMan(gp); // создание экземпляра
-        gp.npc[0].worldX = gp.tileSize*33; // размещение на карте по x
+        gp.npc[0].worldX = gp.tileSize*23; // размещение на карте по x
         gp.npc[0].worldY = gp.tileSize*29; // размещение на карте по y
     }
 }
